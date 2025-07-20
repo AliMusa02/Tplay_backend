@@ -32,7 +32,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
-    "https://tplaybackend-production.up.railway.app", "http://127.0.0.1:8000"]
+    "https://tplaybackend-production.up.railway.app", "http://127.0.0.1:8000", "localhost"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
