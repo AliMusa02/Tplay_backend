@@ -14,11 +14,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         token['email'] = user.email
         token['user_name'] = user.user_name
-        # Add custom claims if needed
+
         return token
 
     def validate(self, attrs):
-        # Override 'username' to 'email'
         attrs['username'] = attrs.get('email')
         return super().validate(attrs)
 
@@ -30,7 +29,6 @@ class TeamSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # author_team_name = serializers.SerializerMethodField()
     team = TeamSerializer(read_only=True)
     # profilePic = serializers.ImageField(required=False, allow_null=True)
 
