@@ -31,6 +31,8 @@ SECRET_KEY = 'django-insecure--xm(k%9h!dk^)95=uwlai2@(z71hq0ujv0k6$&w&9oet5y628e
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://tplaybackend-production.up.railway.app/", "http://127.0.0.1:8000/"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
