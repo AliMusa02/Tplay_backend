@@ -58,7 +58,7 @@ class MatchesSerializer(serializers.ModelSerializer):
     #     source='away_team.id', read_only=True)
     # receiver_teamName = serializers.CharField(
     #     source='away_team.team_name', read_only=True)
-    away_team_captainId = serializers.CharField(
+    away_team_captainId = serializers.IntegerField(
         source='away_team.captain.id', read_only=True)
 
     home_team = teamSerializer(read_only=True)
