@@ -44,7 +44,7 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     profilePic = models.ImageField(
-        upload_to="images/", default='images/fallback.png')
+        upload_to="images/", default='media/images/fallback.png')
 
     objects = CustomAccountManager()
 
