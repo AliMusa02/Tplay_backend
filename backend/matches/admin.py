@@ -6,7 +6,7 @@ from .models import Invitation, Matches
 @admin.register(Invitation)
 class InvitationAdmin(admin.ModelAdmin):
     list_display = ('id', 'sender_team', 'receiver_team', 'venue', 'time_slot', 'date', 'status',
-                    'created_at', 'about', 'captain')
+                    'created_at')
     list_filter = ('status', 'venue')
     ordering = ('created_at',)
 
