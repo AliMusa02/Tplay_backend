@@ -7,9 +7,8 @@ from .models import Posts
 class PostsAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'content',
                     'post_pic', 'created_at')
-    search_fields = ('author')
-    ordering = ('created_at')
-
+    search_fields = ('author__user_name')
+    ordering = ('created_at',)
 
 
 # @admin.register(TeamMember)
