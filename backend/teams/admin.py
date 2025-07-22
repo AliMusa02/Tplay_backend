@@ -4,7 +4,7 @@ from .models import Teams, TeamMember
 
 
 @admin.register(Teams)
-class VenueAdmin(admin.ModelAdmin):
+class TeamsAdmin(admin.ModelAdmin):
     list_display = ('id', 'team_name', 'team_logo',
                     'created_at', 'about', 'captain')
     search_fields = ('team_name')
@@ -12,6 +12,6 @@ class VenueAdmin(admin.ModelAdmin):
 
 
 @admin.register(TeamMember)
-class VenueSlotsAdmin(admin.ModelAdmin):
+class TeamsMembersAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'team', 'joined_at', 'role')
     list_filter = ('team', 'user')
