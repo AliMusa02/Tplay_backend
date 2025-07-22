@@ -32,4 +32,4 @@ class TeamMember(models.Model):
     role = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.team.team_name}"
+        return f"{self.user.user_name} - {self.team.team_name}"
