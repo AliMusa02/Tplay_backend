@@ -57,3 +57,11 @@ class GetUser(generics.RetrieveAPIView):
                 "error": "Failed to fetch user.",
                 "details": str(e)
             }, status=status.HTTP_404_NOT_FOUND)
+
+
+class UserUpdate(generics.UpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user

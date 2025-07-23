@@ -7,11 +7,10 @@ from .models import Posts
 class PostsAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'content',
                     'post_pic', 'created_at')
-    search_fields = ('author__user_name')
+    search_fields = ['author__user_name']
     ordering = ('created_at',)
 
-
-# @admin.register(TeamMember)
-# class VenueSlotsAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'user', 'team', 'joined_at', 'role')
-#     list_filter = ('team', 'user')
+    # @admin.register(TeamMember)
+    # class VenueSlotsAdmin(admin.ModelAdmin):
+    #     list_display = ('id', 'user', 'team', 'joined_at', 'role')
+    #     list_filter = ('team', 'user')

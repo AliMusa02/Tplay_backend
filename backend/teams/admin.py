@@ -7,7 +7,7 @@ from .models import Teams, TeamMember
 class TeamsAdmin(admin.ModelAdmin):
     list_display = ('id', 'team_name', 'team_logo',
                     'created_at', 'about', 'captain')
-    search_fields = ('team_name')
+    search_fields = ['team_name']
     ordering = ('created_at',)
 
 
