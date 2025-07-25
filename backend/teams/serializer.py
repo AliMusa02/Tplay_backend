@@ -33,11 +33,11 @@ class TeamSerializer(serializers.ModelSerializer):
     def get_captain_username(self, obj):
         return obj.captain.user_name if obj.captain else None
 
+    def get_members(self, obj):
+        team_members = obj.members.select_related("user").order_by('joined_at')
+        return TeamMemberSerializer(team_members, many=True).data
+
     class Meta:
         model = Teams
         fields = ["id", "team_name", "team_logo",
                   "about", "created_at", "captain_id", "captain_username", "members"]
-
-    def get_members(self, obj):
-        team_members = obj.members.select_related("user").order_by('joined_at')
-        return TeamMemberSerializer(team_members, many=True).data
