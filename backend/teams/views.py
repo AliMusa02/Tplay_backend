@@ -18,16 +18,16 @@ class CreateAndGetTeams(generics.ListCreateAPIView):
     serializer_class = TeamSerializer
     permission_classes = [IsAuthenticated]
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     try:
-    #         user_team = TeamMember.objects.get(user=user).team
-    #         return Teams.objects.exclude(id=user_team.id).select_related('captain')
-    #     except TeamMember.DoesNotExist:
-    #         return Teams.objects.select_related('captain').all()
-
     def get_queryset(self):
-        return Teams.objects.select_related('captain').all()
+        user = self.request.user
+        try:
+            user_team = TeamMember.objects.get(user=user).team
+            return Teams.objects.exclude(id=user_team.id).select_related('captain')
+        except TeamMember.DoesNotExist:
+            return Teams.objects.select_related('captain').all()
+
+    # def get_queryset(self):
+    #     return Teams.objects.select_related('captain').all()
 
     def perform_create(self, serializer):
         user = self.request.user
