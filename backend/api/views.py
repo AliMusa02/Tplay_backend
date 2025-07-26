@@ -47,7 +47,11 @@ class GetUser(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
+            # print(instance)
             serializer = self.get_serializer(instance)
+            # print("-----------------------------------------")
+            # print(serializer)
+            print(serializer.data)
             return Response({
                 "message": "User fetched successfully!",
                 "user": serializer.data

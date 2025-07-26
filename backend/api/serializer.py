@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from teams.models import Teams
+from teams.models import Teams, TeamMember
 
 
 User = get_user_model()
@@ -22,6 +22,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return super().validate(attrs)
 
 
+# class SimpleTeamSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Teams
+#         fields = ['id', 'team_name', 'team_logo']
+
+
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teams
@@ -29,7 +35,9 @@ class TeamSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    team = TeamSerializer(read_only=True)
+    # team = TeamSerializer(read_only=True)
+    team = serializers.SerializerMethodField()
+
     # profilePic = serializers.ImageField(required=False, allow_null=True)
 
     class Meta:
@@ -71,6 +79,22 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
+    def get_team(self, obj):
+        # from teams.serializer import TeamSerializer
+        # print(f"Getting team for: {obj.user_name}")
+
+        if hasattr(obj, 'team'):
+            print("-> User is a captain")
+            return TeamSerializer(obj.team).data
+
+        try:
+            member = TeamMember.objects.select_related("team").get(user=obj)
+            print("-> User is a player")
+            return TeamSerializer(member.team).data
+        except TeamMember.DoesNotExist:
+            print("-> No team found")
+            return None
 
     # def create(self, validated_data):
     #     if 'profilePic' not in validated_data:

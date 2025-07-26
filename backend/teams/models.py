@@ -28,6 +28,7 @@ class TeamMember(models.Model):
                                 on_delete=models.CASCADE)
     team = models.ForeignKey(
         Teams, on_delete=models.CASCADE, related_name="members")
+    print(team)
     joined_at = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=50, null=True, blank=True)
 
