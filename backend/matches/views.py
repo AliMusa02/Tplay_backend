@@ -178,7 +178,7 @@ class GetOwnMatches(generics.ListAPIView):
         except Teams.DoesNotExist:
             raise NotFound("Team not found.")
 
-        if not (team.captain == user or team.members.filter(user=user).exists()):
-            raise PermissionDenied("You are not part of this team.")
+        # if not (team.captain == user or team.members.filter(user=user).exists()):
+        #     raise PermissionDenied("You are not part of this team.")
 
-        return Matches.objects.filter(Q(home_team=team) | Q(away_team=team))
+        return Matches.objects.filter(Q(home_team=team) | Q(away_team=team)).order_by("date", "time_slot")[:5]
