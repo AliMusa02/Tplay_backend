@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, NotFound
 from rest_framework.exceptions import NotFound
 from django.db.models import Q
+from django.utils.timezone import now
+from datetime import timedelta
 
 # Create your views here.
 
@@ -177,6 +179,13 @@ class GetOwnMatches(generics.ListAPIView):
             team = Teams.objects.get(id=team_id)
         except Teams.DoesNotExist:
             raise NotFound("Team not found.")
+
+        # MAKE IS_PAYED TRUE AFTER ONE DAY SCHELDUED TIME
+        Matches.objects.filter(
+            (Q(home_team=team) | Q(away_team=team)),
+            time_slot__date__lte=now().date() - timedelta(days=1),
+            is_played=False
+        ).update(is_played=True)
 
         # if not (team.captain == user or team.members.filter(user=user).exists()):
         #     raise PermissionDenied("You are not part of this team.")
