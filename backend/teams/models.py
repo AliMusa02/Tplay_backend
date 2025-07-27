@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-
+from api.storage import OverwriteStorage
 
 User = get_user_model()
 
@@ -12,7 +12,8 @@ class Teams(models.Model):
     team_name = models.CharField(
         _("team name"), max_length=50, unique=True, null=False, blank=False)
     team_logo = models.ImageField(
-        null=True, blank=True, upload_to="images/", default='images/fallback.png')
+        null=True, blank=True, upload_to="images/", storage=OverwriteStorage(),
+        default='images/fallback.png')
     about = models.TextField(
         _('about'), max_length=500, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

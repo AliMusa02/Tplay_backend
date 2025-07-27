@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from .storage import OverwriteStorage
 
 
 class CustomAccountManager(BaseUserManager):
@@ -44,7 +45,7 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     profilePic = models.ImageField(
-        upload_to="images/", default='images/fallback.png')
+        upload_to="images/", storage=OverwriteStorage(), default='images/fallback.png')
 
     objects = CustomAccountManager()
 
