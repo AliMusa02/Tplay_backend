@@ -181,4 +181,4 @@ class GetOwnMatches(generics.ListAPIView):
         # if not (team.captain == user or team.members.filter(user=user).exists()):
         #     raise PermissionDenied("You are not part of this team.")
 
-        return Matches.objects.filter(Q(home_team=team) | Q(away_team=team)).order_by("date", "time_slot")[:5]
+        return Matches.objects.filter(Q(home_team=team) | Q(away_team=team), is_played=False).order_by("time_slot__date", "time_slot__slot_time")
