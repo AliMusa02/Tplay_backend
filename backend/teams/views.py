@@ -107,10 +107,14 @@ class createTeamMember(generics.CreateAPIView):
         return TeamMember.objects.select_related("user", "team").all()
 
     def perform_create(self, serializer):
+        team_id = self.kwargs.get("team_id")
+
+        if TeamMember.objects.filter(team=team_id).count() >= 5:
+            raise PermissionDenied("Team is full")
+
         if TeamMember.objects.filter(user=self.request.user).exists():
             raise PermissionDenied("You are already in a team.")
 
-        team_id = self.kwargs.get("team_id")
         try:
             team = Teams.objects.get(id=team_id)
         except:
