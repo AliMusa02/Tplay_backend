@@ -3,6 +3,9 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from teams.models import Teams, TeamMember
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
+from rest_framework.exceptions import ValidationError as DRFValidationError
 
 
 User = get_user_model()
@@ -79,6 +82,16 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
+    # def validate_password(self, value):
+    #     try:
+    #         validate_password(value)
+    #     except DjangoValidationError as e:
+    #         raise DRFValidationError({"password": e.messages})
+    #     return value
+    def validate_password(self, value):
+        validate_password(value)
+        return value
 
     def get_team(self, obj):
         # from teams.serializer import TeamSerializer
